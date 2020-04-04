@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.personal.project.chat.sql">
+	
+	<select id="listChat" parameterType="chatDto" resultType="chatDto">
+		SELECT * from chat WHERE (myId = #{myId} OR myId=#{yourId}) 
+							AND (yourId = #{yourId}OR yourId=#{myId}) order by chatTime ASC  
+	</select>
+	
+	<insert id="saveChat" parameterType="String">
+		insert into chat (
+							myId,
+							yourId,
+							chatContent,
+							chatName,
+							chatTime
+							)values(
+							#{myId},
+							#{yourId},
+							#{chatContent},
+							#{chatName},
+							now()
+							)
+	</insert>
+	
+
+</mapper>

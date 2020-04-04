@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.personal.project.movie.sql">
+	
+	<select id="findTheatersAddress" parameterType="movieDto" resultType="movieDto">
+		select movieTheatersAddress,movieTheatersName,movieTheatersType from movietheaters 
+									where movieTheatersType = #{movieTheatersType} 
+									and movieTheatersName = #{movieTheatersName} 
+									and movieTheatersYn = 1
+	</select>
+	
+	<select id="findMovieTheatersName" parameterType="movieDto" resultType="movieDto">
+		select movieTheatersName,movieTheatersCode from movietheaters where movieTheatersType = #{movieTheatersType} 
+	</select>
+</mapper>

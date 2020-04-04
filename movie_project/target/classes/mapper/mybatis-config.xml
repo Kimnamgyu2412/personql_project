@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  	<typeAliases>
+		<typeAlias type="com.personal.project.user.dto.dto" alias="userDto" />
+		<typeAlias type="com.personal.project.board.dto.dto" alias="boardDto" />
+		<typeAlias type="com.personal.project.chat.dto.dto" alias="chatDto" />
+		<typeAlias type="com.personal.project.friend.dto.dto" alias="friendDto" />
+		<typeAlias type="com.personal.project.movie.dto.dto" alias="movieDto" />
+	</typeAliases>
+	<mappers>
+		<mapper resource="mapper/user/user-sql.xml" />
+		<mapper resource="mapper/board/board-sql.xml" />
+		<mapper resource="mapper/chat/chat-sql.xml" />
+		<mapper resource="mapper/friend/friend-sql.xml" />
+		<mapper resource="mapper/movie/movie-sql.xml" />
+	</mappers>
+</configuration>

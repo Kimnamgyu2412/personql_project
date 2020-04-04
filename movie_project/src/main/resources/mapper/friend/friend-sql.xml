@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.personal.project.friend.sql">
+	
+	<!-- 친구요청 -->
+	<insert id="requestFriend" parameterType="friendDto">
+		INSERT INTO friend(
+							friendUserNo, 
+							friendMyId,
+						    friendFriendId,
+						    friendRequest,
+						    friendRegDate
+						    )
+						VALUES(
+							#{friendUserNo}, 
+							#{friendMyId}, 
+							#{friendFriendId}, 
+							0, 
+							SYSDATE()
+							)
+	
+	</insert>
+	
+	<!-- 요청 체크 -->
+	<select id="requestChk" parameterType="friendDto" resultType="int">
+		select count(*) from friend WHERE (friendMyId = #{friendMyId} OR friendMyId = #{friendFriendId})
+									AND (friendFriendId = #{friendFriendId} OR friendFriendId= #{friendMyId})
+									AND (friendRequest = 0 OR friendRequest = 1)
+	</select>
+	
+	<!-- 친구 수락 -->
+	<update id="agreeFriend" parameterType="friendDto">
+		UPDATE friend SET friendRequest = 1
+									WHERE friendMyId = #{friendFriendId}
+									AND friendFriendId = #{friendMyId}
+	</update>
+	
+	<!-- 수락 후 친구 저장 -->
+	<insert id="saveFriend" parameterType="friendDto">
+		INSERT INTO friend(
+							friendUserNo, 
+							friendMyId,
+						    friendFriendId,
+						    friendRequest,
+						    friendRegDate
+						    )
+						VALUES(
+							((SELECT userNo FROM user WHERE id = #{friendMyId})), 
+							#{friendMyId}, 
+							#{friendFriendId}, 
+							1, 
+							SYSDATE()
+							)
+	</insert>
+	
+	<!-- 수락 목록 리스트 -->
+	<select id="agreeFriendList" parameterType="friendDto" resultType="friendDto">
+		SELECT * FROM friend WHERE friendMyId = #{friendMyId} and friendRequest = 1
+	</select>
+
+	<!-- 요청 목록 리스트 -->
+	<select id="requestFriendList" parameterType="friendDto" resultType="friendDto">
+		SELECT * FROM friend where friendFriendId = #{friendMyId} and friendRequest = 0
+	</select>
+	
+	
+
+</mapper>
